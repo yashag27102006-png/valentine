@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Tanisha 💖</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+    font-family:'Segoe UI',sans-serif;
+}
+
+/* Card */
+.card{
+    background:white;
+    width:90%;
+    max-width:360px;
+    padding:25px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow:0 20px 40px rgba(0,0,0,0.25);
+    position:relative;
+    z-index:2;
+}
+
+h1{ color:#e60073; font-size:24px; }
+p{ font-size:17px; margin:10px 0; }
+
+.buttons{
+    position:relative;
+    height:150px;
+    margin-top:15px;
+}
+
+button{
+    border:none;
+    border-radius:30px;
+    padding:12px 26px;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+#yes{
+    background:#ff4d6d;
+    color:white;
+    transform:scale(1);
+}
+
+#no{
+    background:#aaa;
+    color:white;
+    position:absolute;
+    left:120px;
+    top:80px;
+    transform:scale(1);
+}
+
+.tease{
+    font-size:14px;
+    color:#e60073;
+    height:20px;
+    margin-top:10px;
+}
+
+/* Heart rain */
+.heart{
+    position:absolute;
+    top:-20px;
+    color:#ff4d6d;
+    font-size:20px;
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(110vh);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body onclick="startMusic()">
+
+<div class="card">
+    <h1>Tanisha Agarwal 💕</h1>
+    <p>Will you be my Valentine? 🌹</p>
+    <p>— Yours, Yash Agrawal 😌</p>
+
+    <div class="buttons">
+        <button id="yes" onclick="yesClicked()">YES 😍</button>
+        <button id="no">NO 🙃</button>
+    </div>
+
+    <div class="tease" id="tease"></div>
+</div>
+
+<script>
+/* Heart Rain */
+setInterval(()=>{
+    const heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="❤️";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration=2+Math.random()*3+"s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),5000);
+},300);
+
+/* Buttons logic */
+let noScale=1;
+let yesScale=1;
+
+const teasing=[
+"NO button getting weak 😜",
+"YES is growing stronger 💕",
+"Dil ka decision clear hai 😌",
+"Bas YES bol do Tanisha 😍",
+"NO thak gaya bhaagte bhaagte 😂"
+];
+
+const noBtn=document.getElementById("no");
+const yesBtn=document.getElementById("yes");
+const tease=document.getElementById("tease");
+
+noBtn.addEventListener("mouseover",runAway);
+noBtn.addEventListener("click",runAway);
+
+function runAway(){
+    noScale -= 0.1;
+    yesScale += 0.1;
+
+    noBtn.style.transform=`scale(${noScale})`;
+    yesBtn.style.transform=`scale(${yesScale})`;
+
+    noBtn.style.left=Math.random()*200+"px";
+    noBtn.style.top=Math.random()*120+"px";
+
+    tease.innerText=teasing[Math.floor(Math.random()*teasing.length)];
+}
+
+/* YES clicked */
+function yesClicked(){
+    document.body.innerHTML=`
+    <div style="
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        flex-direction:column;
+        background:linear-gradient(135deg,#ff758c,#ff7eb3);
+        color:white;
+        text-align:center;
+        font-family:Segoe UI;
+        padding:20px;
+    ">
+        <h1>She Said YES 💖🥰</h1>
+        <p style="font-size:22px;">Best Valentine Ever 😍</p>
+        <p>— Forever Yours, Yash ❤️</p>
+    </div>`;
+}
+
+/* Soft 90s romantic tune */
+let played=false;
+function startMusic(){
+    if(played) return;
+    played=true;
+    const ctx=new (window.AudioContext||window.webkitAudioContext)();
+    const osc=ctx.createOscillator();
+    const gain=ctx.createGain();
+    osc.type="sine";
+    osc.frequency.value=440;
+    gain.gain.value=0.05;
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    setTimeout(()=>osc.frequency.value=494,800);
+    setTimeout(()=>osc.frequency.value=523,1600);
+}
+</script>
+
+</body>
+</html>
